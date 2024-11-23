@@ -14,6 +14,9 @@ public class WhackAMole {
     JPanel textPanel = new JPanel();
     JLabel textLabel = new JLabel();
     JPanel boardPanel = new JPanel();
+    JPanel menuPanel = new JPanel();
+    JPanel resetPanel = new JPanel();
+    JButton resetButton = new JButton();
 
     JButton[] board = new JButton[9];
     ImageIcon plantIcon;
@@ -33,14 +36,32 @@ public class WhackAMole {
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
-        textLabel.setFont(new Font("Arial",Font.PLAIN,50));
+        textLabel.setFont(new Font("Arial",Font.PLAIN,30));
         textLabel.setHorizontalAlignment(JLabel.CENTER);
         textLabel.setText("Score : 0");
         textLabel.setOpaque(true);
 
+        resetButton.setText("Reset");
+        resetButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event){
+                score = 0;
+                for(int i=0;i<9 ;i++){
+                    board[i].setEnabled(true);
+                }
+                setMolTimer.start();
+                setPlantTimer.start();
+            }
+        });
+       
+        resetPanel.setLayout(new BorderLayout());
+        resetPanel.add(resetButton);
         textPanel.setLayout(new BorderLayout());
         textPanel.add(textLabel);
-        frame.add(textPanel,BorderLayout.NORTH);
+        menuPanel.setLayout(new BorderLayout());
+        menuPanel.add(textPanel,BorderLayout.CENTER);
+        menuPanel.add(resetPanel,BorderLayout.EAST);
+
+        frame.add(menuPanel,BorderLayout.NORTH);
         
         boardPanel.setLayout(new GridLayout(3,3));
         frame.add(boardPanel);
@@ -52,6 +73,7 @@ public class WhackAMole {
 
         Image moleImg = new ImageIcon(getClass().getResource("./monty.png")).getImage();
         moleIcon = new ImageIcon(moleImg.getScaledInstance(150, 150, java.awt.Image.SCALE_SMOOTH));
+
         for(int i=0;i<9;i++){
             JButton tile = new JButton();
             board[i] = tile;
@@ -81,7 +103,7 @@ public class WhackAMole {
             });
         }
 
-        setMolTimer = new Timer(500, new ActionListener() {
+        setMolTimer = new Timer(800, new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 if(currentMoleTile != null){
                     currentMoleTile.setIcon(null);
@@ -120,6 +142,8 @@ public class WhackAMole {
         setPlantTimer.start();
         frame.setVisible(true);
     }
+
+
 
     
 }
