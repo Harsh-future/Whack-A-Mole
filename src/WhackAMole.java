@@ -43,7 +43,9 @@ public class WhackAMole {
 
         resetButton.setText("Reset");
         resetButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event){
+            public void actionPerformed(ActionEvent event)
+            {
+                textLabel.setText("Score : 0");
                 score = 0;
                 for(int i=0;i<9 ;i++){
                     board[i].setEnabled(true);
